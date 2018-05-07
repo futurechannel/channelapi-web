@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.channelapi.web.dao.ChannelapiRemoteDao">
+
+    <resultMap id="reportDataDay" type="ReportDataDay">
+        <id property="bizDate" column="biz_date"/>
+        <id property="adverterCode" column="adverter_code"/>
+        <id property="appCode" column="app_code"/>
+        <id property="clickCnt" column="click_cnt"/>
+        <id property="callbackCnt" column="callback_cnt"/>
+        <id property="activeCnt" column="active_cnt"/>
+    </resultMap>
+
+    <select id="queryReportDataDays" resultType="reportDataDay">
+        SELECT
+            #{startDate} AS biz_date
+            ,COALESCE(a.adverter_code, '未知') AS adverter_code
+            ,COALESCE(a.app_code, '未知') AS app_code
+            ,COALESCE(SUM(a.click_cnt), 0) AS click_cnt
+            ,COALESCE(SUM(a.active_cnt), 0) AS active_cnt
+            ,COALESCE(SUM(a.callback_cnt), 0) AS callback_cnt
+        FROM
+            (SELECT
+                adverter_code
+                ,app_code
+                ,COUNT(1) AS click_cnt
+                ,NULL AS active_cnt
+                ,NULL AS callback_cnt
+            FROM
+                report_log_${tableDate}
+            GROUP BY
+                adverter_code
+                ,app_code
+            UNION ALL
+            SELECT
+                adverter_code
+                ,app_code
+                ,NULL AS click_cnt
+                ,COUNT(1) AS active_cnt
+                ,COUNT(if(is_call = 1, 1, NULL)) AS callback_cnt
+            FROM
+                callback_log
+            WHERE
+                create_time >= #{startDate}
+                AND <![CDATA[ create_time < #{endDate}]]>
+            GROUP BY
+                adverter_code
+                ,app_code) a
+        GROUP BY
+            a.adverter_code
+            ,a.app_code;
+    </select>
+</mapper>

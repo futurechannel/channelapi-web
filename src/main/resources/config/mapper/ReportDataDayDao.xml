@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.channelapi.web.dao.ReportDataDayDao">
+
+    <resultMap id="reportDataDay" type="ReportDataDay">
+        <id property="bizDate" column="biz_date"/>
+        <id property="adverterCode" column="adverter_code"/>
+        <id property="appCode" column="app_code"/>
+        <id property="clickCnt" column="click_cnt"/>
+        <id property="callbackCnt" column="callback_cnt"/>
+        <id property="activeCnt" column="active_cnt"/>
+    </resultMap>
+
+    <resultMap id="appInfo" type="AppInfo">
+        <id property="appCode" column="app_code"/>
+    </resultMap>
+
+    <select id="queryAll" resultType="reportDataDay">
+        SELECT *
+        FROM report_data_day
+        ORDER BY biz_date DESC
+    </select>
+
+    <select id="queryByAdverter" resultType="reportDataDay">
+        SELECT *
+        FROM report_data_day
+        WHERE adverter_code=#{adverterCode}
+        ORDER BY biz_date DESC;
+    </select>
+
+    <select id="queryByFilter" resultType="reportDataDay">
+        SELECT
+          *
+        FROM
+          report_data_day
+        <where>
+            <if test="adverterCode != null and adverterCode != ''">
+                adverter_code = #{adverterCode}
+            </if>
+            <if test="startDate != null and startDate != ''">
+                AND biz_date >= #{startDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                AND <![CDATA[ biz_date <= #{endDate}]]>
+            </if>
+            <if test="appCode != null and appCode != ''">
+                AND app_code = #{appCode}
+            </if>
+        </where>
+        ORDER BY
+          biz_date DESC;
+    </select>
+
+    <insert id="insertReportDataDayBatch" parameterType="java.util.List">
+        INSERT INTO report_data_day(
+        biz_date, adverter_code, app_code, click_cnt, callback_cnt, active_cnt
+        )VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.bizDate}, #{item.adverterCode}, #{item.appCode}, #{item.clickCnt}, #{item.callbackCnt}, #{item.activeCnt})
+        </foreach>
+    </insert>
+
+    <delete id="deleteByDate">
+        DELETE FROM report_data_day WHERE biz_date = #{bizDate}
+    </delete>
+
+    <select id="queryAppInfo" resultType="appInfo">
+        SELECT
+            app_code
+        FROM
+            report_data_day
+        <where>
+            <if test="adverterCode != null and adverterCode != ''">
+                adverter_code = #{adverterCode}
+            </if>
+        </where>
+        GROUP BY
+            app_code
+    </select>
+</mapper>
