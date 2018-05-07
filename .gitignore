@@ -3,3 +3,4 @@ out/
 target/
 channelapi-web.iml
 .git/
+src/main/resources/config/properties/config-db.properties
