@@ -13,11 +13,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service
-@Transactional
 public class ReportDataDayServiceImpl implements ReportDataDayService {
 
     private static Logger logger = Logger.getLogger(ReportDataDayServiceImpl.class);
