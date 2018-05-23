@@ -10,6 +10,6 @@
 <html>
 <body>
 ${errorMsg}
-<a href="/loginPage">返回</a>
+<a href="loginPage">返回</a>
 </body>
 </html>

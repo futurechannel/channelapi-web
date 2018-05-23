@@ -50,4 +50,92 @@
             a.adverter_code
             ,a.app_code;
     </select>
+
+
+    <resultMap id="advertInfo" type="AdvertInfo">
+        <id property="adverterCode" column="adverter_code"/>
+        <id property="appCode" column="app_code"/>
+        <id property="adverterName" column="adverter_name"/>
+        <id property="balanceRatio" column="balance_ratio"/>
+        <id property="comeFrom" column="come_from"/>
+    </resultMap>
+
+    <select id="queryAdvertInfo" resultType="advertInfo">
+        SELECT
+          adverter_code
+          ,app_code
+          ,adverter_name
+          ,balance_ratio
+          ,come_from
+        FROM
+          advert_info
+    </select>
+
+    <select id="insertAdvertInfo">
+        INSERT INTO advert_info(
+          adverter_code,app_code,adverter_name,balance_ratio,come_from
+		)VALUES (
+		  #{adverterCode}, #{appCode}, #{adverterName}, #{balanceRatio}, #{comeFrom}
+		)
+    </select>
+
+    <delete id="deleteAdvertInfo">
+        DELETE
+        FROM
+          advert_info
+        WHERE
+          adverter_code = #{adverterCode}
+          AND app_code = #{appCode}
+
+    </delete>
+
+    <update id="updateAdvertInfo">
+        UPDATE
+          advert_info
+        SET
+          adverter_code=#{adverterCode}
+          ,app_code=#{appCode}
+          ,adverter_name=#{adverterName}
+          ,balance_ratio=#{balanceRatio}
+          ,come_from=#{comeFrom}
+        WHERE
+          adverter_code = #{adverterCodeOld}
+          AND app_code = #{appCodeOld}
+    </update>
+
+    <resultMap id="idfaInfo" type="IdfaInfo">
+        <id property="idfa" column="idfa"/>
+        <id property="appCode" column="app_code"/>
+        <id property="reportTime" column="report_time"/>
+        <id property="callbackTime" column="callback_time"/>
+    </resultMap>
+
+    <select id="queryIdfaInfo" resultType="idfaInfo">
+        SELECT
+            a.idfa AS idfa
+            ,a.app_code AS app_code
+            ,a.report_time AS report_time
+            ,b.update_time AS callback_time
+        FROM
+            (SELECT
+                idfa
+                ,app_code
+                ,report_time
+            FROM
+                report_log_${tableDate}
+            WHERE
+                idfa = #{idfa}
+                AND app_code = #{appCode}) a
+        LEFT JOIN
+            (SELECT
+                update_time
+            FROM
+                callback_log
+            WHERE
+                idfa = #{idfa}
+                AND app_code = #{appCode}
+                AND is_call = 1) b
+        ON
+            1 = 1
+    </select>
 </mapper>

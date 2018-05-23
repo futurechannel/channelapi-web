@@ -17,3 +17,28 @@ function myparser(s){
         return new Date();
     }
 }
+
+$.messager.defaults = { ok: "是", cancel: "否" };
+
+$(function(){
+    $('#exportExcel').bind('click', function(){
+        exportExcel();
+    });
+});
+
+//导出excel
+function exportExcel() {
+    $.messager.confirm('确认', '确认把该搜索结果导出Excel表格 ？', function(r) {
+        if (r) {
+            var startDate = $('#startDate').val();
+            var endDate = $('#endDate').val();
+            var appCode = $('#appCode').val();
+            $.messager.progress({
+                title : '处理中',
+                msg : '请稍后',
+            });
+            $.messager.progress('close');
+            location.href="exportExcel?startDate=" + startDate + "&endDate=" + endDate + "&appCode=" + appCode;
+        }
+    });
+}

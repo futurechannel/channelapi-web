@@ -1,23 +1,24 @@
 //定义函数
 $(function(){
     //数据
-    var treeData=[{
-        text:"天数据",
-        attributes:{
-            url:"/queryByFilter?from=lastDay"
-        }
-    }];
+    // var treeData=[{
+    //     text:"天数据",
+    //     attributes:{
+    //         url:"queryByFilter?from=lastDay"
+    //     }
+    // }];
 
     //实例化菜单
-    $("#tree").tree({
-        data:treeData,
-        lines:true,
+    $("#menuTree").tree({
+        url: 'menus',
+        lines: true,
         onClick:function(node){
             if(node.attributes){
                 openTab(node.text,node.attributes.url);
             }
         }
     });
+
 
     //新增Tab
     function openTab(text,url){

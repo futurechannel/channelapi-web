@@ -29,7 +29,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        httpServletRequest.getRequestDispatcher("/loginPage").forward(httpServletRequest, httpServletResponse);
+        httpServletRequest.getRequestDispatcher("loginPage").forward(httpServletRequest, httpServletResponse);
         return false;
     }
 

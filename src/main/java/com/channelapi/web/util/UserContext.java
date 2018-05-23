@@ -28,4 +28,5 @@ public class UserContext implements Serializable {
     public static void removeUserSession() {
         RequestContextHolder.getRequestAttributes().removeAttribute(Constant.USER_KEY,RequestAttributes.SCOPE_REQUEST);
     }
+
 }

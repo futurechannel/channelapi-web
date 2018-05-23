@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.channelapi.web.dao.UserManageDao">
+<mapper namespace="com.channelapi.web.dao.RoleMenuDao">
 
-    <resultMap id="user" type="User">
+    <resultMap id="roleMenu" type="RoleMenu">
         <id property="id" column="id"/>
-        <id property="username" column="username"/>
-        <id property="password" column="password"/>
         <id property="roleId" column="role_id"/>
-        <id property="roleName" column="role_name"/>
+        <id property="menuID" column="menu_id"/>
+        <id property="menuName" column="menu_name"/>
+        <id property="menuUrl" column="menu_url"/>
+        <id property="menuIcon" column="menu_icon"/>
     </resultMap>
 
-    <select id="getUserLogin" resultType="user">
-
+    <select id="queryRoleMenuByRole" resultType="roleMenu">
         SELECT
           id
-          ,username
-          ,password
           ,role_id
-          ,role_name
+          ,menu_id
+          ,menu_name
+          ,menu_url
+          ,menu_icon
         FROM
-          user
+          role_menu
         WHERE
-          username = #{username}
-          AND password = #{password}
+          role_id = #{roleId}
     </select>
 
 </mapper>
