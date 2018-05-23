@@ -7,6 +7,7 @@
     <groupId>channel-api</groupId>
     <artifactId>channel-api-web</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
