@@ -14,7 +14,7 @@
 <body>
 <h1>用户登录</h1>
 <hr>
-<form name="logForm" action="/loginCheck" method="post">
+<form name="logForm" action="loginCheck" method="post">
     <table>
         <tr>
             <td>用户名：</td>

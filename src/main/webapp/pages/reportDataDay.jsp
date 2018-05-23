@@ -18,19 +18,20 @@
 </head>
 <body>
 <div style="text-align: center; border-bottom:1px dashed #0099FF;padding: 30px">
-    <form name="queryForm" action="/queryByFilter" method="post">
-        开始日期：<input name="startDate" value="${result.startDate}" class="easyui-datebox" data-options="formatter:myformatter,parser:myparser"/>
-        结束日期：<input name="endDate" value="${result.endDate}" class="easyui-datebox" data-options="formatter:myformatter,parser:myparser" />
-        选择应用：<input class="easyui-combobox"
+    <form name="queryForm" action="queryByFilter" method="post">
+        开始日期：<input id = "startDate" name="startDate" value="${result.startDate}" class="easyui-datebox" data-options="formatter:myformatter,parser:myparser"/>
+        结束日期：<input id = "endDate" name="endDate" value="${result.endDate}" class="easyui-datebox" data-options="formatter:myformatter,parser:myparser" />
+        选择应用：<input id = "appCode" class="easyui-combobox"
                     name="appCode"
                     value="${result.appCode}"
                     data-options="
-					url:'/queryAppCode',
+					url:'queryAppCode',
 					valueField:'appCode',
 					textField:'appCode',
 					panelHeight:'auto'
 			">
         <input type="submit" value="查询"/>
+        <a id = "exportExcel" class="easyui-linkbutton" iconCls="icon-redo">导出表</a>
     </form>
 </div>
 <div style="text-align: center">
