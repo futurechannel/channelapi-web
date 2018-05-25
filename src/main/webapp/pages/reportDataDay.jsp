@@ -43,6 +43,8 @@
             <th>点击量</th>
             <th>激活量</th>
             <th>回调量</th>
+            <th>激活率</th>
+            <th>回调率</th>
         </tr>
         <c:forEach var="item" items="${result.reportDataDays}">
             <tr>
@@ -52,6 +54,8 @@
                 <td>${item.clickCnt}</td>
                 <td>${item.activeCnt}</td>
                 <td>${item.callbackCnt}</td>
+                <td><fmt:formatNumber value="${item.activeCnt == 0?0:item.activeCnt/item.clickCnt}" pattern="0.00"  /></td>
+                <td><fmt:formatNumber value="${item.callbackCnt == 0?0:item.callbackCnt/item.activeCnt}" pattern="0.00" /></td>
             </tr>
         </c:forEach>
     </table>

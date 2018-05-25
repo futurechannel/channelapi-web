@@ -5,7 +5,6 @@ import com.channelapi.web.entity.ReportDataDay;
 import com.channelapi.web.entity.User;
 import com.channelapi.web.service.ChannelApiRemoteService;
 import com.channelapi.web.service.ReportDataDayService;
-import com.channelapi.web.service.impl.ReportDataDayServiceImpl;
 import com.channelapi.web.util.FileUtil;
 import com.channelapi.web.util.UserContext;
 import com.google.gson.Gson;
@@ -22,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -74,9 +72,13 @@ public class ReportDataDayController {
     }
 
 
-    @RequestMapping(value = "/pullRemoteReportDataDay", method = RequestMethod.GET)
+    @RequestMapping(value = "/pull", method = RequestMethod.GET)
     public Map<String, Object> pullReportDataDay(HttpServletRequest request, HttpServletResponse response){
         Map<String, Object> result = new HashMap<>();
+        if (UserContext.getUserSession().getRoleId() != 1){
+            result.put("msg", "无访问权限!");
+            return result;
+        }
         String bizDate = request.getParameter("bizDate");
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
