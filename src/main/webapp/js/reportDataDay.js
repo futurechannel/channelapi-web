@@ -21,18 +21,54 @@ function myparser(s){
 $.messager.defaults = { ok: "是", cancel: "否" };
 
 $(function(){
+
+    //初始化查询框
+    $("#startDate").datebox("setValue",getLastDay());
+
+    //初始化表格
+    $('#reportDataDayTbl').datagrid({
+        url:'queryByFilter',
+        queryParams:{
+            startDate: getLastDay()
+        }
+    });
+
+    //导出excel
     $('#exportExcel').bind('click', function(){
         exportExcel();
     });
+
+    //查询
+    $('#submitForm').bind('click', function(){
+        loadTable();
+    });
+
+
 });
+
+function getLastDay() {
+    var lastDay = new Date(new Date()-24*60*60*1000);
+    return myformatter(lastDay);
+}
+
+function loadTable() {
+    var startDate = $('#startDate').datebox('getValue');
+    var endDate = $('#endDate').datebox('getValue');
+    var appCode = $('#appCode').datebox('getValue');
+    $('#reportDataDayTbl').datagrid('load', {
+        startDate: startDate,
+        endDate: endDate,
+        appCode: appCode
+    });
+}
 
 //导出excel
 function exportExcel() {
     $.messager.confirm('确认', '确认把该搜索结果导出Excel表格 ？', function(r) {
         if (r) {
-            var startDate = $('#startDate').val();
-            var endDate = $('#endDate').val();
-            var appCode = $('#appCode').val();
+            var startDate = $('#startDate').datebox('getValue');
+            var endDate = $('#endDate').datebox('getValue');
+            var appCode = $('#appCode').datebox('getValue');
             $.messager.progress({
                 title : '处理中',
                 msg : '请稍后',

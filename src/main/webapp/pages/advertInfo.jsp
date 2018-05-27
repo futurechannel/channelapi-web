@@ -17,14 +17,14 @@
 <body>
 <div style="width: 1000px;margin: auto">
     <table id="advertInfoTable" class="easyui-datagrid"
-           data-options="rownumbers:true,singleSelect:true,url:'queryAdvertInfo',toolbar:toolbar">
+           data-options="rownumbers:true,singleSelect:true,fitColumns:true,fit:false,url:'queryAdvertInfo',toolbar:toolbar,loadMsg: '数据加载中...'">
         <thead>
         <tr>
             <th data-options="field:'adverterCode',width:200,align:'center'">AdverterCode</th>
             <th data-options="field:'appCode',width:200,align:'center'">AppCode</th>
             <th data-options="field:'adverterName',width:200,align:'center'">AdverterName</th>
             <th data-options="field:'balanceRatio',width:200,align:'center'">BalanceRatio</th>
-            <th data-options="field:'comeFrom', align:'center'">ComeFrom</th>
+            <th data-options="field:'comeFrom',width:200,align:'center'">ComeFrom</th>
         </tr>
         </thead>
     </table>

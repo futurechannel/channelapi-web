@@ -31,12 +31,15 @@
     <div align="left" style="float:left;display: inline">
         <img src="images/main1.jpg" style="width: 70px;height: 70px;margin: 5px 5px">
     </div>
-    <div style="padding-right: 10px;display: inline; float: right;padding-top: 16px">
-        <div>
-            当前用户：&nbsp;<span style="color: red" >${currentUser.getUsername()}</span>
+    <div style="color: #e4943e; font-size: 30px;font-weight: bold; display: inline; position: absolute; top: 35%;">
+        四通启航后台管理系统
+    </div>
+    <div style="float: right; position: relative; top: 35%; right: 10px">
+        <div style="display: inline; font-size: 20px; margin-right: 10px; ">
+            欢迎您！<span style="color: red" >${currentUser.getUsername()}</span>
         </div>
-        <div style="float: right;padding-right: 16px; padding-top: 12px">
-            <button onclick="location.href='logOut'" id="logOut">注销</button>
+        <div style="display: inline; float: right; margin-top: 2px">
+            <a id = "logout" href="logOut" class="easyui-linkbutton" iconCls="icon-cancel">注销</a>
         </div>
     </div>
 
@@ -44,7 +47,7 @@
 <div region="center">
     <div class="easyui-tabs" fit="true" border="false" id="tabs">
         <div title="首页" >
-            <div align="center" style="padding-top: 100px; color: red; size: 50px">欢迎使用</div>
+            <div align="center" style="padding-top: 150px; color: red; font-size: 40px">欢迎使用！</div>
         </div>
     </div>
 </div>

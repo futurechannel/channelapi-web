@@ -37,29 +37,22 @@ public class ReportDataDayController {
     @Autowired
     private ChannelApiRemoteService channelApiRemoteService;
 
+    @RequestMapping(value = "/reportDataDay")
+    public ModelAndView advertInfo(HttpServletRequest request, HttpServletResponse response){
+        ModelAndView modelAndView = new ModelAndView("reportDataDay");
+        return modelAndView;
+    }
+
     @RequestMapping(value = "/queryByFilter")
-    public ModelAndView queryByFilter(HttpServletRequest request, HttpServletResponse response){
+    public Map<String, Object> queryByFilter(HttpServletRequest request, HttpServletResponse response){
         String startDate = request.getParameter("startDate");
         String endDate = request.getParameter("endDate");
         String appCode = request.getParameter("appCode");
 
-        //从昨天开始查询
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-        calendar.add(Calendar.DATE, -1);
-        String bizDate = sdf.format(calendar.getTime());
-        startDate =  "lastDay".equals(request.getParameter("from"))?bizDate: startDate;
-
         Map<String, Object> result = new HashMap<>();
         List<ReportDataDay> reportDataDays  = getReportDataDays(startDate, endDate, appCode);
-        result.put("reportDataDays", reportDataDays);
-        result.put("startDate", startDate);
-        result.put("endDate", endDate);
-        result.put("appCode", appCode);
-        ModelAndView modelAndView =  new ModelAndView("reportDataDay");
-        modelAndView.addObject("result", result);
-        return modelAndView;
+        result.put("rows", reportDataDays);
+        return result;
     }
 
     private List<ReportDataDay> getReportDataDays(String startDate, String endDate, String appCode){
@@ -94,6 +87,8 @@ public class ReportDataDayController {
             reportDataDayService.updateReportDataDay(reportDataDays);
 
             result.put("msg", "success");
+            result.put("size", reportDataDays == null?0:reportDataDays.size());
+            result.put("data", gson.toJson(reportDataDays));
         } catch (Exception e) {
             result.put("error", e.getMessage());
             logger.error("pullRemoteReportDataDay", e);

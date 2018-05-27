@@ -18,46 +18,46 @@
 </head>
 <body>
 <div style="text-align: center; border-bottom:1px dashed #0099FF;padding: 30px">
-    <form name="queryForm" action="queryByFilter" method="post">
-        开始日期：<input id = "startDate" name="startDate" value="${result.startDate}" class="easyui-datebox" data-options="formatter:myformatter,parser:myparser"/>
-        结束日期：<input id = "endDate" name="endDate" value="${result.endDate}" class="easyui-datebox" data-options="formatter:myformatter,parser:myparser" />
-        选择应用：<input id = "appCode" class="easyui-combobox"
+    <form id="queryForm" name="queryForm" method="post">
+        <label for="startDate">开始日期：</label><input id = "startDate" name="startDate" class="easyui-datebox" data-options="formatter:myformatter,parser:myparser"/>
+        <label for="endDate">结束日期：</label><input id = "endDate" name="endDate" class="easyui-datebox" data-options="formatter:myformatter,parser:myparser" />
+        <label for="appCode">选择应用：</label><input id = "appCode" class="easyui-combobox"
                     name="appCode"
-                    value="${result.appCode}"
                     data-options="
 					url:'queryAppCode',
 					valueField:'appCode',
 					textField:'appCode',
 					panelHeight:'auto'
 			">
-        <input type="submit" value="查询"/>
+        <%--<input type="submit" value="查询"/>--%>
+        <a id = "submitForm" class="easyui-linkbutton" iconCls="icon-search">查询</a>
         <a id = "exportExcel" class="easyui-linkbutton" iconCls="icon-redo">导出表</a>
     </form>
 </div>
-<div style="text-align: center">
-    <table border="1" style="margin: 30px auto">
+<div style="width: 1000px;margin: 30px auto">
+    <table id="reportDataDayTbl"
+           data-options="rownumbers:true,singleSelect:true,fitColumns:true,fit:false,loadMsg: '数据加载中...'">
+        <thead>
         <tr>
-            <th>日期</th>
-            <th>渠道号</th>
-            <th>应用号</th>
-            <th>点击量</th>
-            <th>激活量</th>
-            <th>回调量</th>
-            <th>激活率</th>
-            <th>回调率</th>
+            <th data-options="field:'bizDate',width:200,align:'center',
+            formatter: function(value,rowData,rowIndex){
+				return value?myformatter(new Date(value)):value;
+			}">日期</th>
+            <th data-options="field:'adverterCode',width:200,align:'center'">渠道号</th>
+            <th data-options="field:'appCode',width:200,align:'center'">应用号</th>
+            <th data-options="field:'clickCnt',width:200,align:'center'">点击量</th>
+            <th data-options="field:'activeCnt',width:200,align:'center'">激活量</th>
+            <th data-options="field:'callbackCnt',width:200,align:'center'">回调量</th>
+            <th data-options="field:'activeRate',width:200,align:'center',
+            formatter: function(value,rowData,rowIndex){
+				return (rowData.activeCnt == 0?0:rowData.activeCnt/rowData.clickCnt).toFixed(3);
+			}">激活率</th>
+            <th data-options="field:'callbackRate',width:200,align:'center',
+            formatter: function(value,rowData,rowIndex){
+				return (rowData.callbackCnt == 0?0:rowData.callbackCnt/rowData.activeCnt).toFixed(3);
+			}">回调率</th>
         </tr>
-        <c:forEach var="item" items="${result.reportDataDays}">
-            <tr>
-                <td><fmt:formatDate value="${item.bizDate}" pattern="yyyy-MM-dd"/></td>
-                <td>${item.adverterCode}</td>
-                <td>${item.appCode}</td>
-                <td>${item.clickCnt}</td>
-                <td>${item.activeCnt}</td>
-                <td>${item.callbackCnt}</td>
-                <td><fmt:formatNumber value="${item.activeCnt == 0?0:item.activeCnt/item.clickCnt}" pattern="0.00"  /></td>
-                <td><fmt:formatNumber value="${item.callbackCnt == 0?0:item.callbackCnt/item.activeCnt}" pattern="0.00" /></td>
-            </tr>
-        </c:forEach>
+        </thead>
     </table>
 </div>
 </body>
