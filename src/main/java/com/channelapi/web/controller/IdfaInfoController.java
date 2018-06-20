@@ -44,7 +44,7 @@ public class IdfaInfoController {
 
         try {
             String idfa = request.getParameter("idfa");
-            String appCode = "mangguo";
+            String appCode = request.getParameter("appCode");
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String bizDate = sdf.format(new Date());
             IdfaInfo data = channelApiRemoteService.queryIdfaInfo(idfa, appCode, bizDate);

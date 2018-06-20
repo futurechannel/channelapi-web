@@ -20,7 +20,8 @@
 <input class="easyui-searchbox" style="width:500px"
        data-options="searcher:queryIdfaInfo,prompt:'请输入IDFA',menu:'#appCode'"></input>
 <div id="appCode" style="width:120px">
-    <div data-options="name:'appCode'">mangguo</div>
+    <div data-options="name:'mangguo'">mangguo</div>
+    <div data-options="name:'wangdai'">wangdai</div>
 </div>
 <div>
 
