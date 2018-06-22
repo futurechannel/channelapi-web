@@ -26,9 +26,9 @@ public class IdfaInfoController {
 
     @RequestMapping(value = "/idfaInfo")
     public ModelAndView advertInfo(HttpServletRequest request, HttpServletResponse response){
-        if (UserContext.getUserSession().getRoleId() != 1){
-            return new ModelAndView("error").addObject("errorMsg", "无权限访问");
-        }
+//        if (UserContext.getUserSession().getRoleId() != 1){
+//            return new ModelAndView("error").addObject("errorMsg", "无权限访问");
+//        }
         ModelAndView modelAndView = new ModelAndView("idfaInfo");
         return modelAndView;
     }
@@ -37,10 +37,10 @@ public class IdfaInfoController {
     public Map<String, Object> queryIdfaInfo(HttpServletRequest request, HttpServletResponse response){
         Map<String, Object> map = new HashMap<>();
         map.put("code", 0);
-        if (UserContext.getUserSession().getRoleId() != 1){
-            map.put("msg", "无访问权限!");
-            return map;
-        }
+//        if (UserContext.getUserSession().getRoleId() != 1){
+//            map.put("msg", "无访问权限!");
+//            return map;
+//        }
 
         try {
             String idfa = request.getParameter("idfa");
