@@ -54,7 +54,7 @@ function getLastDay() {
 function loadTable() {
     var startDate = $('#startDate').datebox('getValue');
     var endDate = $('#endDate').datebox('getValue');
-    var appCode = $('#appCode').datebox('getValue');
+    var appCode = $('#appCode').combobox('getValue');
     $('#reportDataDayTbl').datagrid('load', {
         startDate: startDate,
         endDate: endDate,
