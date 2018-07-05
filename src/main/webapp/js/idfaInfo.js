@@ -1,4 +1,9 @@
-function queryIdfaInfo(idfa, appCode){
+function queryIdfaInfo(idfa){
+    var appCode = $('#appCode').combobox('getValue');
+    if (!appCode){
+        $.messager.alert('提示',"请选择应用");
+        return;
+    }
     $.ajax({
         type: "POST",
         url: "queryIdfaInfo",
