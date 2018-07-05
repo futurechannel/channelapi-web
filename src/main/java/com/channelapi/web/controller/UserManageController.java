@@ -3,6 +3,7 @@ package com.channelapi.web.controller;
 import com.channelapi.web.constant.Constant;
 import com.channelapi.web.entity.User;
 import com.channelapi.web.service.UserManageService;
+import com.channelapi.web.util.IpUtil;
 import com.channelapi.web.util.UserContext;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,5 +81,11 @@ public class UserManageController {
         HttpSession session = request.getSession();
         session.removeAttribute(Constant.USER_KEY);
         return new ModelAndView("loginPage");
+    }
+
+
+    @RequestMapping(value = "/test")
+    public String getUserIp(HttpServletRequest request, HttpServletResponse response){
+        return IpUtil.getRequestIp(request);
     }
 }
