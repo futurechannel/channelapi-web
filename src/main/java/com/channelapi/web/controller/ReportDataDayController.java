@@ -124,8 +124,8 @@ public class ReportDataDayController {
             row.createCell(1).setCellValue("渠道号");
             row.createCell(2).setCellValue("应用号");
             row.createCell(3).setCellValue("点击量");
-            row.createCell(4).setCellValue("激活量");
-            row.createCell(5).setCellValue("回调量");
+//            row.createCell(4).setCellValue("激活量");
+            row.createCell(4).setCellValue("回调量");
 
             //获取数据
             if (reportDataDays != null && reportDataDays.size() > 0) {
@@ -137,8 +137,8 @@ public class ReportDataDayController {
                     lastRow.createCell(1).setCellValue(reportDataDay.getAdverterCode());
                     lastRow.createCell(2).setCellValue(reportDataDay.getAppCode());
                     lastRow.createCell(3).setCellValue(reportDataDay.getClickCnt());
-                    lastRow.createCell(4).setCellValue(reportDataDay.getActiveCnt());
-                    lastRow.createCell(5).setCellValue(reportDataDay.getCallbackCnt());
+//                    lastRow.createCell(4).setCellValue(reportDataDay.getActiveCnt());
+                    lastRow.createCell(4).setCellValue(reportDataDay.getCallbackCnt());
                 }
             }
             //设置文件名

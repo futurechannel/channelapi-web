@@ -30,7 +30,12 @@
 
     <select id="queryByFilter" resultType="reportDataDay">
         SELECT
-          *
+          id
+          ,biz_date
+          ,adverter_code
+          ,app_code
+          ,click_cnt
+          ,callback_cnt
         FROM
           report_data_day
         <where>

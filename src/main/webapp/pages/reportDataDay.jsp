@@ -46,16 +46,16 @@
             <th data-options="field:'adverterCode',width:200,align:'center'">渠道号</th>
             <th data-options="field:'appCode',width:200,align:'center'">应用号</th>
             <th data-options="field:'clickCnt',width:200,align:'center'">点击量</th>
-            <th data-options="field:'activeCnt',width:200,align:'center'">激活量</th>
+            <%--<th data-options="field:'activeCnt',width:200,align:'center'">激活量</th>--%>
             <th data-options="field:'callbackCnt',width:200,align:'center'">回调量</th>
-            <th data-options="field:'activeRate',width:200,align:'center',
-            formatter: function(value,rowData,rowIndex){
-				return (rowData.activeCnt == 0?0:rowData.activeCnt/rowData.clickCnt).toFixed(3);
-			}">激活率</th>
-            <th data-options="field:'callbackRate',width:200,align:'center',
-            formatter: function(value,rowData,rowIndex){
-				return (rowData.callbackCnt == 0?0:rowData.callbackCnt/rowData.activeCnt).toFixed(3);
-			}">回调率</th>
+            <%--<th data-options="field:'activeRate',width:200,align:'center',--%>
+            <%--formatter: function(value,rowData,rowIndex){--%>
+				<%--return (rowData.activeCnt == 0?0:rowData.activeCnt/rowData.clickCnt).toFixed(3);--%>
+			<%--}">激活率</th>--%>
+            <%--<th data-options="field:'callbackRate',width:200,align:'center',--%>
+            <%--formatter: function(value,rowData,rowIndex){--%>
+				<%--return (rowData.callbackCnt == 0?0:rowData.callbackCnt/rowData.activeCnt).toFixed(3);--%>
+			<%--}">回调率</th>--%>
         </tr>
         </thead>
     </table>
