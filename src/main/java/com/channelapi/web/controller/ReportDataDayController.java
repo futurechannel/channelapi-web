@@ -40,6 +40,7 @@ public class ReportDataDayController {
     @RequestMapping(value = "/reportDataDay")
     public ModelAndView advertInfo(HttpServletRequest request, HttpServletResponse response){
         ModelAndView modelAndView = new ModelAndView("reportDataDay");
+        modelAndView.addObject("roleId", UserContext.getUserSession().getRoleId());
         return modelAndView;
     }
 
@@ -50,18 +51,34 @@ public class ReportDataDayController {
         String appCode = request.getParameter("appCode");
 
         Map<String, Object> result = new HashMap<>();
-        List<ReportDataDay> reportDataDays  = getReportDataDays(startDate, endDate, appCode);
+        List<Map<String, Object>> reportDataDays  = getReportDataDays(startDate, endDate, appCode);
         result.put("rows", reportDataDays);
         return result;
     }
 
-    private List<ReportDataDay> getReportDataDays(String startDate, String endDate, String appCode){
+    private List<Map<String, Object>> getReportDataDays(String startDate, String endDate, String appCode){
         User user = UserContext.getUserSession();
         String adverterCode = "";
+        List<Map<String, Object>> results = new ArrayList<>();
         if (user.getRoleId() == 2){
             adverterCode = user.getUsername();
         }
-        return reportDataDayService.queryByFilter(adverterCode, startDate, endDate, appCode);
+        //获取所有字段数据
+        List<ReportDataDay> reportDataDays = reportDataDayService.queryByFilter(adverterCode, startDate, endDate, appCode);
+        for (ReportDataDay reportDataDay : reportDataDays){
+            Map<String, Object> map = new HashMap<>();
+            map.put("bizDate", reportDataDay.getBizDate());
+            map.put("adverterCode", reportDataDay.getAdverterCode());
+            map.put("appCode", reportDataDay.getAppCode());
+            map.put("clickCnt", reportDataDay.getClickCnt());
+            map.put("callbackCnt", reportDataDay.getCallbackCnt());
+            //管理员才能看到所有字段 对渠道商过滤部分字段
+            if (user.getRoleId() == 1){
+                map.put("activeCnt", reportDataDay.getActiveCnt());
+            }
+            results.add(map);
+        }
+        return results;
     }
 
 
@@ -109,8 +126,9 @@ public class ReportDataDayController {
         String startDate = request.getParameter("startDate");
         String endDate = request.getParameter("endDate");
         String appCode = request.getParameter("appCode");
+        User user = UserContext.getUserSession();
 
-        List<ReportDataDay> reportDataDays  = getReportDataDays(startDate, endDate, appCode);
+        List<Map<String, Object>> reportDataDays  = getReportDataDays(startDate, endDate, appCode);
         logger.info("Export Excel Data: " + gson.toJson(reportDataDays));
         try {
             //使用poi下载文件
@@ -124,21 +142,29 @@ public class ReportDataDayController {
             row.createCell(1).setCellValue("渠道号");
             row.createCell(2).setCellValue("应用号");
             row.createCell(3).setCellValue("点击量");
-//            row.createCell(4).setCellValue("激活量");
-            row.createCell(4).setCellValue("回调量");
+            if (user.getRoleId() == 1){
+                row.createCell(4).setCellValue("激活量");
+                row.createCell(5).setCellValue("回调量");
+            }else if (user.getRoleId() == 2){
+                row.createCell(4).setCellValue("回调量");
+            }
 
             //获取数据
             if (reportDataDays != null && reportDataDays.size() > 0) {
                 SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-                for (ReportDataDay reportDataDay : reportDataDays) {
+                for (Map reportDataDay : reportDataDays) {
                     int lastRowNum = sheet1.getLastRowNum();
                     HSSFRow lastRow = sheet1.createRow(lastRowNum + 1);
-                    lastRow.createCell(0).setCellValue(sdf.format(reportDataDay.getBizDate()));
-                    lastRow.createCell(1).setCellValue(reportDataDay.getAdverterCode());
-                    lastRow.createCell(2).setCellValue(reportDataDay.getAppCode());
-                    lastRow.createCell(3).setCellValue(reportDataDay.getClickCnt());
-//                    lastRow.createCell(4).setCellValue(reportDataDay.getActiveCnt());
-                    lastRow.createCell(4).setCellValue(reportDataDay.getCallbackCnt());
+                    lastRow.createCell(0).setCellValue(sdf.format(reportDataDay.get("bizDate")));
+                    lastRow.createCell(1).setCellValue(String.valueOf(reportDataDay.get("adverterCode")));
+                    lastRow.createCell(2).setCellValue(String.valueOf(reportDataDay.get("appCode")));
+                    lastRow.createCell(3).setCellValue(String.valueOf(reportDataDay.get("clickCnt")));
+                    if (user.getRoleId() == 1){
+                        lastRow.createCell(4).setCellValue(String.valueOf(reportDataDay.get("activeCnt")));
+                        lastRow.createCell(5).setCellValue(String.valueOf(reportDataDay.get("callbackCnt")));
+                    }else if (user.getRoleId() == 2){
+                        lastRow.createCell(4).setCellValue(String.valueOf(reportDataDay.get("callbackCnt")));
+                    }
                 }
             }
             //设置文件名

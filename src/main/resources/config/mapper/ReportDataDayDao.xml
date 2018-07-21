@@ -36,6 +36,7 @@
           ,app_code
           ,click_cnt
           ,callback_cnt
+          ,active_cnt
         FROM
           report_data_day
         <where>
