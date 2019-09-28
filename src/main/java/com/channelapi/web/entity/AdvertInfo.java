@@ -1,6 +1,8 @@
 package com.channelapi.web.entity;
 
 
+import java.math.BigDecimal;
+
 public class AdvertInfo {
 
     private String adverterCode;
@@ -8,6 +10,9 @@ public class AdvertInfo {
     private String adverterName;
     private int balanceRatio;
     private String comeFrom;
+    private BigDecimal callBackRateLimit;
+    private BigDecimal callBackRate;
+    private String warningEmail;
 
     public String getAdverterCode() {
         return adverterCode;
@@ -47,5 +52,43 @@ public class AdvertInfo {
 
     public void setComeFrom(String comeFrom) {
         this.comeFrom = comeFrom;
+    }
+
+    public BigDecimal getCallBackRateLimit() {
+        return callBackRateLimit;
+    }
+
+    public void setCallBackRateLimit(BigDecimal callBackRateLimit) {
+        this.callBackRateLimit = callBackRateLimit;
+    }
+
+    public BigDecimal getCallBackRate() {
+        return callBackRate;
+    }
+
+    public void setCallBackRate(BigDecimal callBackRate) {
+        this.callBackRate = callBackRate;
+    }
+
+    public String getWarningEmail() {
+        return warningEmail;
+    }
+
+    public void setWarningEmail(String warningEmail) {
+        this.warningEmail = warningEmail;
+    }
+
+    @Override
+    public String toString() {
+        return "AdvertInfo{" +
+                "adverterCode='" + adverterCode + '\'' +
+                ", appCode='" + appCode + '\'' +
+                ", adverterName='" + adverterName + '\'' +
+                ", balanceRatio=" + balanceRatio +
+                ", comeFrom='" + comeFrom + '\'' +
+                ", callBackRateLimit=" + callBackRateLimit +
+                ", callBackRate=" + callBackRate +
+                ", warningEmail='" + warningEmail + '\'' +
+                '}';
     }
 }

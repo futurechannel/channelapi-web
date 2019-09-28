@@ -58,6 +58,9 @@
         <id property="adverterName" column="adverter_name"/>
         <id property="balanceRatio" column="balance_ratio"/>
         <id property="comeFrom" column="come_from"/>
+        <id property="callBackRateLimit" column="call_back_rate_limit"/>
+        <id property="callBackRate" column="call_back_rate"/>
+        <id property="warningEmail" column="warning_email"/>
     </resultMap>
 
     <select id="queryAdvertInfo" resultType="advertInfo">
@@ -137,5 +140,58 @@
                 AND is_call = 1) b
         ON
             1 = 1
+    </select>
+
+    <select id="getCallbackRateWarnings" resultType="advertInfo">
+        SELECT
+            a.adverter_code AS adverter_code
+            ,a.app_code AS app_code
+            ,a.call_back_rate_limit AS call_back_rate_limit
+            ,c.callback_cnt/b.report_cnt AS call_back_rate
+            ,a.warning_email AS warning_email
+        FROM
+            (SELECT
+                adverter_code
+                ,app_code
+                ,call_back_rate_limit
+                ,warning_email
+            FROM
+                advert_info) a
+        LEFT JOIN
+            (SELECT
+                app_code
+                ,adverter_code
+                ,COUNT(1) AS report_cnt
+            FROM
+                report_log_${tableDate}
+            WHERE
+                report_time >= #{startTime}
+                AND <![CDATA[ report_time <= #{endTime} ]]>
+            GROUP BY
+                app_code
+                ,adverter_code) b
+        ON
+            a.adverter_code = b.adverter_code
+            AND a.app_code = b.app_code
+        LEFT JOIN
+            (SELECT
+                app_code
+                ,adverter_code
+                ,COUNT(1) AS callback_cnt
+            FROM
+                callback_log
+            WHERE
+                is_call = 1
+                AND create_time >= #{startTime}
+                AND <![CDATA[ create_time <= #{endTime} ]]>
+            GROUP BY
+                app_code
+                ,adverter_code) c
+        ON
+            a.app_code = c.app_code
+            AND a.adverter_code = c.adverter_code
+        WHERE
+            a.call_back_rate_limit > 0
+            AND <![CDATA[ a.call_back_rate_limit < (c.callback_cnt/b.report_cnt) ]]>
     </select>
 </mapper>

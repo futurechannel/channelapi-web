@@ -5,6 +5,7 @@ import com.channelapi.web.entity.IdfaInfo;
 import com.channelapi.web.entity.ReportDataDay;
 import org.apache.ibatis.annotations.Param;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -22,4 +23,5 @@ public interface ChannelapiRemoteDao {
             , @Param("comeFrom") String comeFrom);
 
     IdfaInfo queryIdfaInfo(@Param("idfa") String idfa, @Param("appCode") String appCode, @Param("tableDate") String tableDate);
+    List<AdvertInfo> getCallbackRateWarnings(@Param("tableDate") String tableDate, @Param("startTime") Timestamp startTime, @Param("endTime") Timestamp endTime);
 }
