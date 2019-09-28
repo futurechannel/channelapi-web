@@ -22,14 +22,12 @@ import java.util.List;
 public class WarningJob {
 
     private static Logger logger = Logger.getLogger(WarningJob.class);
+    private static final String from = "15240025221@163.com";
 
     @Autowired
     private ChannelapiRemoteDao channelapiRemoteDao;
 
-    @Value("${mail.fromAddress}")
-    private String from;
-
-    @Scheduled(cron= "0 0/30 * * * ?")
+    @Scheduled(cron= "0 0/1 * * * ?")
     @DynamicDataSourceAnnotation(dataSource = Constant.DATA_SOURCE_SERVICE)
     public void callbackRateWarningJob(){
         logger.info("=======callbackRateWarningJob start==========");
@@ -47,10 +45,11 @@ public class WarningJob {
                     content.append("应用:").append(advertInfo.getAppCode()).append(",");
                     content.append("回调率阈值:").append(advertInfo.getCallBackRateLimit()).append(",");
                     content.append("回调率:").append(advertInfo.getCallBackRate());
-                    String[] toEmails = advertInfo.getWarningEmail().split(";");
+                    String toEmails = advertInfo.getWarningEmail();
                     EmailUtil.sendEmail(from, toEmails, "回调率过高预警", content.toString());
                 }
             }
+            logger.info("=======callbackRateWarningJob end==========");
         } catch (Exception e) {
             logger.error("callbackRateWarningJob exception : ", e);
         }

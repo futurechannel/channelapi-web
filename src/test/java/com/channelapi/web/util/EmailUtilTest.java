@@ -21,8 +21,8 @@ import static org.junit.Assert.*;
 public class EmailUtilTest {
 
     @Test
-    public void sendEmail() throws MessagingException {
-        String[] toEmails = {"gordontong@stonggo.com", "463302373@qq.com"};
+    public void sendEmail() {
+        String toEmails = "15240025221@163.com,463302373@qq.com";
         EmailUtil.sendEmail("15240025221@163.com", toEmails, "测试", "测试");
     }
 }
