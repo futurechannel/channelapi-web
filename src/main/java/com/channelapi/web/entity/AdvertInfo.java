@@ -10,7 +10,8 @@ public class AdvertInfo {
     private String adverterName;
     private int balanceRatio;
     private String comeFrom;
-    private BigDecimal callBackRateLimit;
+    private BigDecimal callBackRateUpperLimit;
+    private BigDecimal callBackRateLowerLimit;
     private BigDecimal callBackRate;
     private String warningEmail;
 
@@ -54,14 +55,6 @@ public class AdvertInfo {
         this.comeFrom = comeFrom;
     }
 
-    public BigDecimal getCallBackRateLimit() {
-        return callBackRateLimit;
-    }
-
-    public void setCallBackRateLimit(BigDecimal callBackRateLimit) {
-        this.callBackRateLimit = callBackRateLimit;
-    }
-
     public BigDecimal getCallBackRate() {
         return callBackRate;
     }
@@ -78,6 +71,22 @@ public class AdvertInfo {
         this.warningEmail = warningEmail;
     }
 
+    public BigDecimal getCallBackRateUpperLimit() {
+        return callBackRateUpperLimit;
+    }
+
+    public void setCallBackRateUpperLimit(BigDecimal callBackRateUpperLimit) {
+        this.callBackRateUpperLimit = callBackRateUpperLimit;
+    }
+
+    public BigDecimal getCallBackRateLowerLimit() {
+        return callBackRateLowerLimit;
+    }
+
+    public void setCallBackRateLowerLimit(BigDecimal callBackRateLowerLimit) {
+        this.callBackRateLowerLimit = callBackRateLowerLimit;
+    }
+
     @Override
     public String toString() {
         return "AdvertInfo{" +
@@ -86,7 +95,8 @@ public class AdvertInfo {
                 ", adverterName='" + adverterName + '\'' +
                 ", balanceRatio=" + balanceRatio +
                 ", comeFrom='" + comeFrom + '\'' +
-                ", callBackRateLimit=" + callBackRateLimit +
+                ", callBackRateUpperLimit=" + callBackRateUpperLimit +
+                ", callBackRateLowerLimit=" + callBackRateLowerLimit +
                 ", callBackRate=" + callBackRate +
                 ", warningEmail='" + warningEmail + '\'' +
                 '}';

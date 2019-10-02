@@ -43,10 +43,11 @@ public class WarningJob {
                 for (AdvertInfo advertInfo : advertInfos) {
                     content.append("渠道:").append(advertInfo.getAdverterCode()).append(",");
                     content.append("应用:").append(advertInfo.getAppCode()).append(",");
-                    content.append("回调率阈值:").append(advertInfo.getCallBackRateLimit()).append(",");
-                    content.append("回调率:").append(advertInfo.getCallBackRate());
+                    content.append("上限阈值:").append(advertInfo.getCallBackRateUpperLimit()).append(",");
+                    content.append("下限阈值:").append(advertInfo.getCallBackRateLowerLimit()).append(",");
+                    content.append("实际值:").append(advertInfo.getCallBackRate());
                     String toEmails = advertInfo.getWarningEmail();
-                    EmailUtil.sendEmail(from, toEmails, "回调率过高预警", content.toString());
+                    EmailUtil.sendEmail(from, toEmails, "点击回调比过高预警", content.toString());
                 }
             }
             logger.info("=======callbackRateWarningJob end==========");
