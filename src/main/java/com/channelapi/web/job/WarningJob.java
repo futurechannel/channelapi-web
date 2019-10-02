@@ -27,7 +27,7 @@ public class WarningJob {
     @Autowired
     private ChannelapiRemoteDao channelapiRemoteDao;
 
-    @Scheduled(cron= "0 0/1 * * * ?")
+    @Scheduled(cron= "0 0/30 * * * ?")
     @DynamicDataSourceAnnotation(dataSource = Constant.DATA_SOURCE_SERVICE)
     public void callbackRateWarningJob(){
         logger.info("=======callbackRateWarningJob start==========");

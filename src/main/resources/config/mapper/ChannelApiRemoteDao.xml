@@ -181,8 +181,7 @@
             FROM
                 callback_log
             WHERE
-                is_call = 1
-                AND create_time >= #{startTime}
+                create_time >= #{startTime}
                 AND <![CDATA[ create_time <= #{endTime} ]]>
             GROUP BY
                 app_code
