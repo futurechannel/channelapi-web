@@ -62,6 +62,9 @@
                 }">回调率
                 </th>
             </c:if>
+            <c:if test="${requestScope.roleId eq 1}">
+                <th data-options="field:'realClickCnt',width:200,align:'center'">真实点击量</th>
+            </c:if>
 
         </tr>
         </thead>

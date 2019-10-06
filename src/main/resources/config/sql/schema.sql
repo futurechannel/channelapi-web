@@ -23,3 +23,15 @@ CREATE TABLE user
   role_id INT(4) COMMENT '1:管理员，2:渠道商',
   role_name VARCHAR(100)
 )ENGINE=INNODB  DEFAULT CHARSET=utf8;
+
+
+create table role_menu
+(
+    id        int(10) primary key not null auto_increment,
+    role_id   int(4)       ,
+    menu_id   int(4)       ,
+    menu_name varchar(255) not null,
+    menu_url  varchar(255) ,
+    menu_icon varchar(255)
+) ENGINE=INNODB  DEFAULT CHARSET=utf8;
+

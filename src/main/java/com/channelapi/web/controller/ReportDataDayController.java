@@ -75,6 +75,7 @@ public class ReportDataDayController {
             //管理员才能看到所有字段 对渠道商过滤部分字段
             if (user.getRoleId() == 1){
                 map.put("activeCnt", reportDataDay.getActiveCnt());
+                map.put("realClickCnt",reportDataDay.getRealClickCnt());
             }
             results.add(map);
         }
@@ -145,6 +146,7 @@ public class ReportDataDayController {
             if (user.getRoleId() == 1){
                 row.createCell(4).setCellValue("激活量");
                 row.createCell(5).setCellValue("回调量");
+                row.createCell(6).setCellValue("真实点击量");
             }else if (user.getRoleId() == 2){
                 row.createCell(4).setCellValue("回调量");
             }
@@ -162,6 +164,7 @@ public class ReportDataDayController {
                     if (user.getRoleId() == 1){
                         lastRow.createCell(4).setCellValue(String.valueOf(reportDataDay.get("activeCnt")));
                         lastRow.createCell(5).setCellValue(String.valueOf(reportDataDay.get("callbackCnt")));
+                        lastRow.createCell(6).setCellValue(String.valueOf(reportDataDay.get("realClickCnt")));
                     }else if (user.getRoleId() == 2){
                         lastRow.createCell(4).setCellValue(String.valueOf(reportDataDay.get("callbackCnt")));
                     }

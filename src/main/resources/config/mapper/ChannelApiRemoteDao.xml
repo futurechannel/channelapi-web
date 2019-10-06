@@ -9,6 +9,7 @@
         <id property="clickCnt" column="click_cnt"/>
         <id property="callbackCnt" column="callback_cnt"/>
         <id property="activeCnt" column="active_cnt"/>
+        <id property="realClickCnt" column="real_click_cnt"/>
     </resultMap>
 
     <select id="queryReportDataDays" resultType="reportDataDay">
@@ -19,6 +20,7 @@
             ,COALESCE(SUM(a.click_cnt), 0) AS click_cnt
             ,COALESCE(SUM(a.active_cnt), 0) AS active_cnt
             ,COALESCE(SUM(a.callback_cnt), 0) AS callback_cnt
+            ,COALESCE(SUM(a.real_click_cnt), 0) AS real_click_cnt
         FROM
             (SELECT
                 adverter_code
@@ -26,6 +28,7 @@
                 ,COUNT(1) AS click_cnt
                 ,NULL AS active_cnt
                 ,NULL AS callback_cnt
+                ,COUNT(if(is_cpc_report = 0, 1 , NULL )) AS real_click_cnt
             FROM
                 report_log_${tableDate}
             GROUP BY
@@ -38,6 +41,7 @@
                 ,NULL AS click_cnt
                 ,COUNT(1) AS active_cnt
                 ,COUNT(if(is_call = 1, 1, NULL)) AS callback_cnt
+                ,NULL AS real_click_cnt
             FROM
                 callback_log
             WHERE

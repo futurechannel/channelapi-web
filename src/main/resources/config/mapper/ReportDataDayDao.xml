@@ -9,6 +9,7 @@
         <id property="clickCnt" column="click_cnt"/>
         <id property="callbackCnt" column="callback_cnt"/>
         <id property="activeCnt" column="active_cnt"/>
+        <id property="realClickCnt" column="real_click_cnt"/>
     </resultMap>
 
     <resultMap id="appInfo" type="AppInfo">
@@ -37,6 +38,7 @@
           ,click_cnt
           ,callback_cnt
           ,active_cnt
+          ,real_click_cnt
         FROM
           report_data_day
         <where>
@@ -59,10 +61,10 @@
 
     <insert id="insertReportDataDayBatch" parameterType="java.util.List">
         INSERT INTO report_data_day(
-        biz_date, adverter_code, app_code, click_cnt, callback_cnt, active_cnt
+        biz_date, adverter_code, app_code, click_cnt, callback_cnt, active_cnt,real_click_cnt
         )VALUES
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.bizDate}, #{item.adverterCode}, #{item.appCode}, #{item.clickCnt}, #{item.callbackCnt}, #{item.activeCnt})
+            (#{item.bizDate}, #{item.adverterCode}, #{item.appCode}, #{item.clickCnt}, #{item.callbackCnt}, #{item.activeCnt},#{item.realClickCnt})
         </foreach>
     </insert>
 

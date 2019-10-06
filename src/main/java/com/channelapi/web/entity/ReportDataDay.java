@@ -15,6 +15,7 @@ public class ReportDataDay {
     private int clickCnt;
     private int callbackCnt;
     private int activeCnt;
+    private int realClickCnt;
 
     public int getId() {
         return id;
@@ -70,5 +71,13 @@ public class ReportDataDay {
 
     public void setActiveCnt(int activeCnt) {
         this.activeCnt = activeCnt;
+    }
+
+    public int getRealClickCnt() {
+        return realClickCnt;
+    }
+
+    public void setRealClickCnt(int realClickCnt) {
+        this.realClickCnt = realClickCnt;
     }
 }
