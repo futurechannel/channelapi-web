@@ -35,3 +35,5 @@ create table role_menu
     menu_icon varchar(255)
 ) ENGINE=INNODB  DEFAULT CHARSET=utf8;
 
+ALTER TABLE report_data_day ADD real_click_cnt int(10) comment '真实点击量';
+
