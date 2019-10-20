@@ -27,7 +27,7 @@ public class DataPorterJob {
     /**
      * 定时任务，每天凌晨1点同步前一天数据
      */
-    @Scheduled(cron= "0 0 1 * * ?")
+    @Scheduled(cron= "5 0 0 * * ?")
     public void reportDataDayJob(){
         logger.info("=======reportDataDayJob start==========");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
