@@ -63,7 +63,10 @@
                 </th>
             </c:if>
             <c:if test="${requestScope.roleId eq 1}">
-                <th data-options="field:'realClickCnt',width:200,align:'center'">真实点击量</th>
+                <th data-options="field:'realActiveRate',width:200,align:'center',
+                formatter: function(value,rowData,rowIndex){
+                    return (rowData.activeCnt == 0||rowData.realClickCnt==0?0:rowData.activeCnt/rowData.realClickCnt).toFixed(3);
+                }">真实激活率</th>
             </c:if>
 
         </tr>
